@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+    <meta name="description" content="首先非常感谢Mario Wolczko将这门课的资料全部开源，见UCB CS294-113: Virtual Machines and Managed Runtimes，同时感谢这门课的 TAPatrick提供的 lab 指导。 从六月初开始写 CS294-113 lab，到现在接近两个月，cfeeny 的部分已悉数完成。整个过程没有随堂上课，也没有任何辅导，但写 lab 的体验感非常好，甚至可以">
+<meta property="og:type" content="article">
+<meta property="og:title" content="CS294-113完结（伪）撒花">
+<meta property="og:url" content="http://example.com/2024/07/25/2024-07-25/index.html">
+<meta property="og:site_name" content="molepi&#39;s home">
+<meta property="og:description" content="首先非常感谢Mario Wolczko将这门课的资料全部开源，见UCB CS294-113: Virtual Machines and Managed Runtimes，同时感谢这门课的 TAPatrick提供的 lab 指导。 从六月初开始写 CS294-113 lab，到现在接近两个月，cfeeny 的部分已悉数完成。整个过程没有随堂上课，也没有任何辅导，但写 lab 的体验感非常好，甚至可以">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2024-07-25T02:18:44.927Z">
+<meta property="article:modified_time" content="2024-07-25T03:33:22.942Z">
+<meta property="article:author" content="molepi">
+<meta property="article:tag" content="vm">
+<meta name="twitter:card" content="summary">
+    
+    
+      
+        
+          <link rel="shortcut icon" href="/images/favicon.ico">
+        
+      
+      
+        
+          <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+        
+      
+      
+        
+          <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+        
+      
+    
+    <!-- title -->
+    <title>CS294-113完结（伪）撒花</title>
+    <!-- async scripts -->
+    <!-- Google Analytics -->
+
+
+    <!-- Umami Analytics -->
+
+
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+    <!-- rss -->
+    
+    
+	<!-- mathjax -->
+	
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="Menu"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="Menu"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" aria-label="Top" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fa-solid fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/tags/">tags</a></li><!--
+     --><!--
+       --><li><a href="/categories/">Category</a></li><!--
+     -->
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        
+        <li><a class="icon" aria-label="Next post" href="/2024/07/09/CS161%20Project1%20Writeup/"><i class="fa-solid fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" aria-label="Back to top" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="Share post" href="#"><i class="fa-solid fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=http://example.com/2024/07/25/2024-07-25/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=http://example.com/2024/07/25/2024-07-25/&text=CS294-113完结（伪）撒花"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=http://example.com/2024/07/25/2024-07-25/&title=CS294-113完结（伪）撒花"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=http://example.com/2024/07/25/2024-07-25/&is_video=false&description=CS294-113完结（伪）撒花"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=CS294-113完结（伪）撒花&body=Check out this article: http://example.com/2024/07/25/2024-07-25/"><i class="fa-solid fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=http://example.com/2024/07/25/2024-07-25/&title=CS294-113完结（伪）撒花"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=http://example.com/2024/07/25/2024-07-25/&title=CS294-113完结（伪）撒花"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=http://example.com/2024/07/25/2024-07-25/&title=CS294-113完结（伪）撒花"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=http://example.com/2024/07/25/2024-07-25/&title=CS294-113完结（伪）撒花"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=http://example.com/2024/07/25/2024-07-25/&name=CS294-113完结（伪）撒花&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=http://example.com/2024/07/25/2024-07-25/&t=CS294-113完结（伪）撒花"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    
+    
+  </span>
+</div>
+
+    
+    <div class="content index py4 ">
+        
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle p-name" itemprop="name headline">
+        CS294-113完结（伪）撒花
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author p-author h-card" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span class="p-name" itemprop="name">molepi</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2024-07-25T02:18:44.927Z" class="dt-published" itemprop="datePublished">2024-07-25</time>
+        
+      
+    </div>
+
+
+      
+    <div class="article-category">
+        <i class="fa-solid fa-archive"></i>
+        <a class="category-link" href="/categories/%E9%9A%8F%E7%AC%94/">随笔</a>
+    </div>
+
+
+      
+    <div class="article-tag">
+        <i class="fa-solid fa-tag"></i>
+        <a class="p-category" href="/tags/vm/" rel="tag">vm</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content e-content" itemprop="articleBody">
+    <p>首先非常感谢<a target="_blank" rel="noopener" href="http://www.wolczko.com/">Mario Wolczko</a>将这门课的资料全部开源，见<a target="_blank" rel="noopener" href="http://www.wolczko.com/CS294/">UCB CS294-113: Virtual Machines and Managed Runtimes</a>，同时感谢这门课的 TA<a target="_blank" rel="noopener" href="http://patricksli.com/">Patrick</a>提供的 lab 指导。</p>
+<p>从六月初开始写 CS294-113 lab，到现在接近两个月，cfeeny 的部分已悉数完成。整个过程没有随堂上课，也没有任何辅导，但写 lab 的体验感非常好，甚至可以说超过了很多我在校时期做的作业或者 lab。平心而论这个课的 lab 的代码量相对很多课都是非常大的，skeleton 只提供了 ast 和 bytecode 的部分，除了 feeny parser 其他部分都需要学生自己实现。如果直接把这个大任务抛给我，显然之前没有接触过 vm 的我也会手足无措，但好在 lab 指导将这个大任务分成了一些小任务，并且每个具体的小任务也会给予你实现的方法论指导，不会让你完全摸不到头绪。虽说是有具体的指导，但代码的实现非常自由，正如前述 skeleton 只提供了很少的部分，其他部分采取什么样的数据结构，具体如何实现基本交由学生决定，lab 指导有时会推荐你使用什么样的结构，但更多是一种启发式的提示，在具体的设计上学生享有非常高的自由度。这也是我十分青睐这个 lab 的一点，有明确的方法论指导但仍然给予学生高度的自由去实现他们的构想，在指导和自由度上达到了一个让我感到舒适的平衡。我不怎么喜欢把代码框架限制得太死，将每一个细微的步骤都告诉学生让学生填几行代码或者填几个函数的 lab 形式，但我也同样不喜欢缺乏有效指导完全让没什么基础的学生像无头苍蝇乱撞的“fly bitch”式的 lab 形式。</p>
+<p>做 CS294-113 的 lab 时我并没有看其提供的课程录像，slides 和其他参考资料之于我也更像一本字典，遇到陌生的概念或者技术时会去参看，很多时候我遇到不懂得都是直接 google，包括一些技术细节或者 debug 遇到的问题，例如在实现 jit 的时候刚开始我对如何获得相对地址和绝对地址感到十分困惑，好在 google 后发现有相当多类似的问题，在参考网上的回答后这些疑问就迎刃而解。也正是这个 lab 让我进一步体会到思考、实践、搜索的重要性，同样是 jit，因为我并没有经过课程学习这一概念，所以刚开始看 lab 指导的时候也有点云里雾里，然后我就索性先抛开指导，开始思考如果让我来设计 jit 我会怎么做，我会面临哪些问题，这些问题该如何解决。首先浮现在我脑海的就是 compilation unit 的问题，即我需要在什么时候进行 jit compilation，生成 machine instruction 的范围应该是多大。在 lab 指导的提示下我已经指导为每一种 operation 准备一个 compilation pattern，然后在 jit compilation 的时候替换一部分 text 接着复制到可执行的区域就行，如果代码完全是顺序执行的那么只需要按照顺序复制粘贴就能生成执行的 instructions 序列，但是我们要面临函数内跳转和调用函数，所以于我最好的选择就是以 method 为单位进行 jit compilation，goto 和 branch 的地址也方便记录下并进行回填，跳转函数时也能复用已经为 method 生成的 instruction。这个逻辑链非常自然。之后也面临了很多问题，但好在这是已经有的技术，大多数技术问题的解决在网上就可以找到参考。</p>
+<p>说到逻辑链还想说一下整个 lab 循序渐进的设计，从一开始写一个 AST interpreter 到将 AST compile 到 bytecode，执行 bytecode 提升效率，再到通过 jit 将 bytecode 直接转换成特定的 machine instructions 并进行复用，最后基于 jit 实现 instruction cache 进一步减少 trap 提升 instructions 的复用程度。学生的 cfeeny interpreter 也遵循这些设计不断升级，从一开始执行<code>soduku2.feeny</code>需要花好几十秒甚至是几分钟，到最后只需要几秒，技术的更迭，设计的优化改进带来的性能提升非常直观，并且对这些技术为什么出现，为什么会采用这样的实现方式的认识进一步加深。毕竟技术的进步就是一个不断发现问题、提出问题、解决问题、试验解决方案的过程。整个 lab 实际上就是一个 language vm 技术的 time machine，将学生置于此技术发展过程的虚拟机中，通过通过一定指导帮助学生加深对 language vm 技术的理解。</p>
+<p>关于这个 lab 其实还有很多想说的，但主要也是自己的一些主观感受了。思考了一下该用什么样的话来结束这篇随笔，不如就用下面的这句话来表达吧。</p>
+<p><strong>一个好的 cs 课程的 lab 应该是什么样的。我想应该就是这样的。</strong></p>
+
+  </div>
+</article>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+        
+          <li><a href="/">Home</a></li>
+        
+          <li><a href="/tags/">tags</a></li>
+        
+          <li><a href="/categories/">Category</a></li>
+        
+      </ul>
+    </div>
+
+    
+    
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=http://example.com/2024/07/25/2024-07-25/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=http://example.com/2024/07/25/2024-07-25/&text=CS294-113完结（伪）撒花"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=http://example.com/2024/07/25/2024-07-25/&title=CS294-113完结（伪）撒花"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=http://example.com/2024/07/25/2024-07-25/&is_video=false&description=CS294-113完结（伪）撒花"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=CS294-113完结（伪）撒花&body=Check out this article: http://example.com/2024/07/25/2024-07-25/"><i class="fa-solid fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=http://example.com/2024/07/25/2024-07-25/&title=CS294-113完结（伪）撒花"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=http://example.com/2024/07/25/2024-07-25/&title=CS294-113完结（伪）撒花"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=http://example.com/2024/07/25/2024-07-25/&title=CS294-113完结（伪）撒花"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=http://example.com/2024/07/25/2024-07-25/&title=CS294-113完结（伪）撒花"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=http://example.com/2024/07/25/2024-07-25/&name=CS294-113完结（伪）撒花&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=http://example.com/2024/07/25/2024-07-25/&t=CS294-113完结（伪）撒花"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fa-solid fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fa-solid fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2016-2024
+    molepi
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/tags/">tags</a></li><!--
+     --><!--
+       --><li><a href="/categories/">Category</a></li><!--
+     -->
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+
+
+    <!-- jquery -->
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script>
+
+
+
+
+<!-- clipboard -->
+
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script>
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
+    btn += '<i class="fa-regular fa-clone"></i>';
+    btn += '</span>';
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "Copied!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+<!-- Disqus Comments -->
+
+<!-- utterances Comments -->
+
+</body>
+</html>
